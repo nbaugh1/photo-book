@@ -5,3 +5,13 @@ document.addEventListener('DOMContentLoaded', function (){
     
 });
 
+function addMouseOverToImages() {
+    
+}
+
+function createComment() {
+    return {
+        name: document.getElementById('name').value,
+        content: document.getElementById('content').value
+    }
+}
