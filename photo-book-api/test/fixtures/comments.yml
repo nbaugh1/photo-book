@@ -3,7 +3,9 @@
 one:
   commentor: MyString
   content: MyText
+  photo: one
 
 two:
   commentor: MyString
   content: MyText
+  photo: two
