@@ -9,13 +9,17 @@ class Photo {
     static all = []
 
     template() {
+        let img = this
         return `
-        <div class="col-lg-3 col-md-4 col-xs-6">
-            <a href="#" data-image-id="" data-toggle="modal" data-title=""
-                data-image="${this.imgur_link}" data-target="#image-gallery">
-                <img class="img-thumbnail" src="${this.imgur_link}" alt="Another alt text">
-                <p>${this.info}</p>
-            </a>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <div>
+        <h6>${img.info}</h6>
+            <img class="img-thumbnail" src="${img.imgur_link}" alt="">
+        </div>
+        <div>
+        <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#imgModal">View Comments</button>
+        </div>
+        <br>
         </div>
         `
     }

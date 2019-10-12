@@ -1,7 +1,7 @@
 class Api {
     static baseUrl = "http://localhost:3000"
 
-    static makePhotos() {
+    static makePhotoStrip() {
         fetch(Api.baseUrl + '/api/photos/')
           .then(resp => resp.json())
           .then(photos => {
