@@ -7,10 +7,17 @@ class Api {
           .then(photos => {
             photos.forEach(photo => {
               let newPhoto = new Photo(photo)
-              newPhoto.display()
+              newPhoto.displayPhotoInStrip()
             })
           })
           
           .catch(errors => console.log('d', errors))
+    }
+
+    static selectPhoto(photo) {
+      fetch(Api.baseUrl + '/api/photos/${photo.id}')
+      console.log(photo.id)
+        .then(resp => resp.json())
+        
     }
   }
