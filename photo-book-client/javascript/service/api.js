@@ -13,17 +13,23 @@ class Api {
           
           .catch(errors => console.log('d', errors))
     }
+   
 
-    static selectPhoto(photo) {
-      fetch(Api.baseUrl + '/api/photos/${photo.id}')
-      console.log(photo.id)
+    static assignSelectedPhoto(photo) {
+      debugger;
+      fetch(Api.baseUrl + `/api/photos/${photo.id}`)
         .then(resp => resp.json())
-        
+        .then(photo => {
+          let selectedPhoto = photo
+          return selectedPhoto
+        })
+       
     }
 
     static submitComment(event) {
       event.preventDefault();
-      let data = createData();
+      let data = createData(); 
+      debugger;
       fetch(Api.baseUrl + '/api/comments', {
         method: "POST",
         headers: {
@@ -35,8 +41,9 @@ class Api {
         .then(response => response.json())
         .then(data => {
           let comment = new Comment(data.commenter, data.content);
-          debugger;
+    
         })
     }
+    
   
   }

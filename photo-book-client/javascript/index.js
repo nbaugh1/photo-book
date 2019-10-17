@@ -1,11 +1,23 @@
 // initializer code goes here
 
 // eventListener ensures that all of the elements are loaded into the DOM
+
+function createData() {
+    return {
+        comment: {
+            commenter: document.getElementById('commenter').value,
+            content: document.getElementById('content').value 
+        
+        }
+    }
+
+}
 function selectPhoto(photo) {
     let selectedPhoto = Photo.findByImgurLink(photo["src"])
     console.log(selectedPhoto)
+    
     document.getElementsByClassName("view-panel")[0].innerHTML = viewPanelTemplate(selectedPhoto);
-    document.getElementsByClassName("add-comment-button")[0].innerHTML = commentBlockButton();
+    document.getElementsByClassName("add-comment-button")[0].innerHTML = addCommentButton(selectedPhoto);
 }
 
 
@@ -20,14 +32,15 @@ function viewPanelTemplate(photo) {
   <img src="${photo.imgur_link}" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">${photo.info}</h5>
-    <p class="card-text">this is where photo comments will go</p>
+    <p class="card-text" id="comment-card-text">this is where photo comments will go</p>
     <p class="card-text"><small class="text-muted">perhaps put the number of comments here or something</small></p>
   </div>
 </div>
     `
 }
 
-function commentBlockButton() {
+function addCommentButton(photo) {
+    
     return `
    
        <button type="button" class="btn-primary" value="Add New Comment" onclick="renderCommentForm()">Add New Comment</button>
@@ -57,10 +70,19 @@ function commentFormTemplate () {
     `
 }
 
-function renderCommentForm () {
+function addSubmitEventToCommentForm() {
+    document.getElementById("comment-form").addEventListener('submit', Api.submitComment);
+}
+
+function renderCommentForm(photo) {
     document.getElementsByClassName("comment-form")[0].innerHTML = commentFormTemplate();
     document.getElementsByClassName("add-comment-button")[0].innerHTML = "";
+    console.log()
+    Api.assignSelectedPhoto(photo);
+    debugger;
+    addSubmitEventToCommentForm();
 }
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
