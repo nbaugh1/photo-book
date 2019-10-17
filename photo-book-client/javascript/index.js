@@ -5,6 +5,7 @@ function selectPhoto(photo) {
     let selectedPhoto = Photo.findByImgurLink(photo["src"])
     console.log(selectedPhoto)
     document.getElementsByClassName("view-panel")[0].innerHTML = viewPanelTemplate(selectedPhoto);
+    document.getElementsByClassName("add-comment-button")[0].innerHTML = commentBlockButton();
 }
 
 
@@ -15,21 +16,55 @@ function alert() {
 
 function viewPanelTemplate(photo) {
     return `
-    <div class="card" style="width: 18rem;">
-                                <img src="${photo.imgur_link}" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                  <h5 class="card-title">${photo.info} </h5>
-                                  <p class="card-text">Comments go here</p>
-                                  <p class="card-text">Comments go here</p>
-                                  <p class="card-text">Comments go here</p>
-                                  <p class="card-text">Comments go here</p>
-                                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                              </div>
+<div class="text-center card mb-3">
+  <img src="${photo.imgur_link}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">${photo.info}</h5>
+    <p class="card-text">this is where photo comments will go</p>
+    <p class="card-text"><small class="text-muted">perhaps put the number of comments here or something</small></p>
+  </div>
+</div>
     `
 }
-document.addEventListener('DOMContentLoaded', function (){
+
+function commentBlockButton() {
+    return `
+   
+       <button type="button" class="btn-primary" value="Add New Comment" onclick="renderCommentForm()">Add New Comment</button>
+
+    `
+}
+
+function commentFormTemplate () {
+    return `
+    <div class="row">
+    <div class="col s12 m6 l6">
+      <form id="comment-form" action="#">
+      <label for="commenter">Name:</label>
+        <div class="input-field">
+          <input type="text" name="commenter" id="commenter">
+          
+        </div>
     
+        <label for="content">Comment:</label>
+        <div class="input-field">
+          <textarea name="content" id="content" cols="60" rows="25"></textarea>
+        </div>
+    <br>
+        <input type="submit" value="Post Comment" class="btn-primary">
+      </form>
+    </div>
+    `
+}
+
+function renderCommentForm () {
+    document.getElementsByClassName("comment-form")[0].innerHTML = commentFormTemplate();
+    document.getElementsByClassName("add-comment-button")[0].innerHTML = "";
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
     Api.makePhotoStrip()
 
     console.log("test")
