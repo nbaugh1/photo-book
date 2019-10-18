@@ -1,23 +1,65 @@
 class Api {
     static baseUrl = "http://localhost:3000"
 
-    static makePhotoStrip() {
+    static getPhotos() {
         fetch(Api.baseUrl + '/api/photos/')
           .then(resp => resp.json())
           .then(photos => {
             photos.forEach(photo => {
               let newPhoto = new Photo(photo)
-              newPhoto.displayPhotoInStrip()
             })
+            Photo.renderAll();
           })
-          
           .catch(errors => console.log('d', errors))
     }
 
-    static selectPhoto(photo) {
-      fetch(Api.baseUrl + '/api/photos/${photo.id}')
-      console.log(photo.id)
-        .then(resp => resp.json())
-        
+    static getPhoto(photo) {
+      console.log(photo.src)
+      let selectedPhoto = Photo.all.find(p => p.imgur_link === photo.src)
+      fetch(Api.baseUrl + `/api/photos/${selectedPhoto.id}`)
+          .then(resp => resp.json())
+          .then(photo => {
+          })
+        return photo.id
     }
-  }
+
+    static submitComment(event) {
+      event.preventDefault();
+      let data = createData(); 
+      fetch(Api.baseUrl + '/api/comments', {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => response.json())
+        .then(data => {
+          let newComment = new Comment(data);
+          clearForm();
+          alert(`New Comment on Photo Number ${newComment.photo_id}: ${newComment.commenter} - ${newComment.content}`);
+          newComment.displayNewComment()
+          })
+    }
+
+    static getComments(photoTag) {
+      let allComments = []
+      let tagId = photoTag.id
+      fetch(Api.baseUrl + '/api/comments/')
+        .then(resp => resp.json())
+        .then(comments => {
+            comments.forEach (comment =>{
+              let newComment = new Comment(comment)
+              allComments.push(newComment)
+            })
+            allComments.forEach(comment => {
+              if (`${comment.photo_id}` === tagId){
+                console.log(`photoTag.id = ${photoTag.id} comment.photo_id = ${comment.photo_id}`)
+                comment.displayComments()
+              }
+            })
+            
+        })
+      }
+}

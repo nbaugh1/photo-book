@@ -1,4 +1,5 @@
 class Photo {
+
     constructor(data) {
         this.id = data.id
         this.imgur_link = data.imgur_link
@@ -8,37 +9,33 @@ class Photo {
 
     static all = []
 
-    photoStripTemplate() {
-        let img = this
-        return `
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-            <div class="text-center">
-                <h6>${img.info}</h6>
-                
-                <img class="img-thumbnail" src="${img.imgur_link}" alt="" onclick="selectPhoto(this)">
-                
+    
+
+    template() {
+        let img = this;
+        return`
+            <div class="col-lg-3 col-md-4 col-6">
+                <div class="row" class="d-block mb-4 h-100">
+                    <img class="img-fluid img-thumbnail" src="${img.imgur_link}" alt="" id="${img.id}" onClick="showPhoto(this)">
+                </div>
             </div>
-            
-        <br>
-        </div>
         `
     }
 
-    
-    
-    displayPhotoInStrip() {
-        document.getElementsByClassName("image")[0].innerHTML += this.photoStripTemplate();
-    }    
-
-    static findByImgurLink(imgurLink) {
-        return Photo.all.find(photo => photo.imgur_link === imgurLink)
+    comments() {
+        let comments = []
+        comments = Comment.all.filter(comment => comment.photo_id === this.id)
+        return comments
     }
-    
 
-    
-    // static renderAll() {
-    //     Photo.all.forEach(photo => {
-    //         photo.display()
-    //     })
-    // }
+    display() {
+        let photo = this;
+        document.querySelector("div.gallery").innerHTML += this.template(photo);
+    }
+
+    static renderAll() {
+        Photo.all.forEach(photo => {
+            photo.display();
+        })
+    }
 }
