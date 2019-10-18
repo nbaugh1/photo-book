@@ -1,35 +1,31 @@
 class Api {
     static baseUrl = "http://localhost:3000"
 
-    static makePhotoStrip() {
+    static getPhotos() {
         fetch(Api.baseUrl + '/api/photos/')
           .then(resp => resp.json())
           .then(photos => {
             photos.forEach(photo => {
               let newPhoto = new Photo(photo)
-              newPhoto.displayPhotoInStrip()
             })
+            Photo.renderAll();
           })
-          
           .catch(errors => console.log('d', errors))
     }
-   
 
-    static assignSelectedPhoto(photo) {
-      debugger;
-      fetch(Api.baseUrl + `/api/photos/${photo.id}`)
-        .then(resp => resp.json())
-        .then(photo => {
-          let selectedPhoto = photo
-          return selectedPhoto
-        })
-       
+    static getPhoto(photo) {
+      console.log(photo.src)
+      let selectedPhoto = Photo.all.find(p => p.imgur_link === photo.src)
+      fetch(Api.baseUrl + `/api/photos/${selectedPhoto.id}`)
+          .then(resp => resp.json())
+          .then(photo => {
+          })
+        return photo.id
     }
 
     static submitComment(event) {
       event.preventDefault();
       let data = createData(); 
-      debugger;
       fetch(Api.baseUrl + '/api/comments', {
         method: "POST",
         headers: {
@@ -40,10 +36,23 @@ class Api {
       })
         .then(response => response.json())
         .then(data => {
-          let comment = new Comment(data.commenter, data.content);
-    
-        })
+          let newComment = new Comment(data);
+          clearForm();
+          alert(`New Comment on Photo Number ${newComment.photo_id}: ${newComment.commenter} - ${newComment.content}`);
+          newComment.displayNewComment()
+          })
     }
-    
-  
-  }
+
+    static getComments() {
+      let allComments = []
+      fetch(Api.baseUrl + '/api/comments/')
+        .then(resp => resp.json())
+        .then(comments => {
+            comments.forEach (comment =>{
+              let newComment = new Comment(comment)
+              allComments.push(newComment)
+            })
+            // Comment.renderComments();
+        })
+      }
+}

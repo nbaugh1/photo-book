@@ -1,21 +1,31 @@
 class Comment {
     static all = []
-    constructor(commenter, content) {
-        this.commenter = commenter;
-        this.content = content;
+    constructor(comment) {
+        this.commenter = comment.commenter;
+        this.content = comment.content;
+        this.photo_id = comment.photo_id;
         Comment.all.push(this);
     }
 
+
     template() {
-        let photo = Api.findPhoto(photo)
         return `
             <div>
-                <p>${this.commenter} says: ${this.content}</p>
+                <p>${this.content}</p>
             </div>
             `
     }
 
-    display() {
-        document.getElementById("comment-card-text").innerHtml += this.template()
+    
+
+    displayNewComment() {
+        document.querySelector("div.comments").innerHTML += this.template();
     }
+    
+    // static renderComments() {
+    //     let comments = Comment.all
+    //     comments.forEach(comment=> {
+    //         comment.display();
+    //     });
+    // }
 }
