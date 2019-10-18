@@ -11,12 +11,14 @@ class Comment {
     template() {
         return `
             <div>
-                <p>${this.content}</p>
+                <p><strong>${this.commenter}</strong> says: ${this.content}</p>
             </div>
             `
     }
 
-    
+    displayComments() {
+        document.querySelector("div.old-comments").innerHTML += this.template();
+    }
 
     displayNewComment() {
         document.querySelector("div.comments").innerHTML += this.template();

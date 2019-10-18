@@ -22,7 +22,7 @@ function viewPanelTemplate(photoTag) {
             <div class="text-center card mb-3">
                 <img src="${photoTag.src}" class="card-img-top" alt="${photoTag.id}">
             <div class="card-body">
-                <h5 class="card-title" id="photo-id">${photoTag.id}</h5>
+                <h5 class="card-title" id="photo-id">${photo.info}</h5>
                 <div class="comment-card-text">
                     
                 </div>
@@ -36,12 +36,13 @@ function viewPanelTemplate(photoTag) {
                         </div>
                     <label for="content">Comment:</label>
                         <div class="input-field">
-                            <textarea name="content" id="content" cols="60" rows="25"></textarea>
+                            <textarea name="content" id="content" cols="60" rows="8"></textarea>
                         </div>
                     <br>
                     <div>
                         <input type="submit" value="Add Comment" class="btn-primary" id="">
                     </div>
+                    <br>
                         </form>
                     </div>
             </div>
@@ -50,16 +51,17 @@ function viewPanelTemplate(photoTag) {
 
 
 
-function addSubmitEventToCommentForm(photo) {
+function addSubmitEventToCommentForm() {
     document.getElementById("comment-form").addEventListener('submit', Api.submitComment);
     // let selectedPhoto = Api.getPhoto(photo);
     }
 
 function showPhoto(photoTag) {
     document.querySelector("div.comments").innerHTML = ""
+    document.querySelector("div.old-comments").innerHTML = ""
     document.querySelector("div.view-panel").innerHTML = viewPanelTemplate(photoTag);
-    addSubmitEventToCommentForm(photoTag);
-    Api.getComments();
+    addSubmitEventToCommentForm();
+    Api.getComments(photoTag);
 }
 
 function clearForm() {

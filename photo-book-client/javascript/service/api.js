@@ -43,8 +43,9 @@ class Api {
           })
     }
 
-    static getComments() {
+    static getComments(photoTag) {
       let allComments = []
+      let tagId = photoTag.id
       fetch(Api.baseUrl + '/api/comments/')
         .then(resp => resp.json())
         .then(comments => {
@@ -52,7 +53,13 @@ class Api {
               let newComment = new Comment(comment)
               allComments.push(newComment)
             })
-            // Comment.renderComments();
+            allComments.forEach(comment => {
+              if (`${comment.photo_id}` === tagId){
+                console.log(`photoTag.id = ${photoTag.id} comment.photo_id = ${comment.photo_id}`)
+                comment.displayComments()
+              }
+            })
+            
         })
       }
 }
