@@ -23,11 +23,4 @@ class Comment {
     displayNewComment() {
         document.querySelector("div.comments").innerHTML += this.template();
     }
-    
-    // static renderComments() {
-    //     let comments = Comment.all
-    //     comments.forEach(comment=> {
-    //         comment.display();
-    //     });
-    // }
 }

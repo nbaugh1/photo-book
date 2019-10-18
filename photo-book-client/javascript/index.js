@@ -53,7 +53,6 @@ function viewPanelTemplate(photoTag) {
 
 function addSubmitEventToCommentForm() {
     document.getElementById("comment-form").addEventListener('submit', Api.submitComment);
-    // let selectedPhoto = Api.getPhoto(photo);
     }
 
 function showPhoto(photoTag) {
