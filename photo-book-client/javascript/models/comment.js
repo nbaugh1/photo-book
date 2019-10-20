@@ -1,3 +1,5 @@
+//refactor the code so that you are fetching all the comments up front, and whenever you click a photo, you access the already-available comments array 
+
 class Comment {
     static all = []
     constructor(comment) {
@@ -7,7 +9,6 @@ class Comment {
         Comment.all.push(this);
     }
 
-
     template() {
         return `
             <div>
@@ -16,7 +17,7 @@ class Comment {
             `
     }
 
-    displayComments() {
+    displayComment() {
         document.querySelector("div.old-comments").innerHTML += this.template();
     }
 

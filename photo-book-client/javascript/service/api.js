@@ -9,19 +9,21 @@ class Api {
               let newPhoto = new Photo(photo)
             })
             Photo.renderAll();
+            addClickToThumbnails();
+
           })
           .catch(errors => console.log('d', errors))
     }
 
-    static getPhoto(photo) {
-      console.log(photo.src)
-      let selectedPhoto = Photo.all.find(p => p.imgur_link === photo.src)
-      fetch(Api.baseUrl + `/api/photos/${selectedPhoto.id}`)
-          .then(resp => resp.json())
-          .then(photo => {
+    static getComments() {
+      fetch(Api.baseUrl + '/api/comments/')
+        .then(resp => resp.json())
+        .then(comments => {
+            comments.forEach (comment =>{
+              let newComment = new Comment(comment)
+            })
           })
-        return photo.id
-    }
+        }
 
     static submitComment(event) {
       event.preventDefault();
@@ -42,24 +44,4 @@ class Api {
           newComment.displayNewComment()
           })
     }
-
-    static getComments(photoTag) {
-      let allComments = []
-      let tagId = photoTag.id
-      fetch(Api.baseUrl + '/api/comments/')
-        .then(resp => resp.json())
-        .then(comments => {
-            comments.forEach (comment =>{
-              let newComment = new Comment(comment)
-              allComments.push(newComment)
-            })
-            allComments.forEach(comment => {
-              if (`${comment.photo_id}` === tagId){
-                console.log(`photoTag.id = ${photoTag.id} comment.photo_id = ${comment.photo_id}`)
-                comment.displayComments()
-              }
-            })
-            
-        })
-      }
-}
+  }

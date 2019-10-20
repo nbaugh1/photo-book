@@ -12,11 +12,10 @@ class Photo {
     
 
     template() {
-        let img = this;
         return`
             <div class="col-lg-3 col-md-4 col-6">
                 <div class="row" class="d-block mb-4 h-100">
-                    <img class="img-fluid img-thumbnail" src="${img.imgur_link}" alt="" id="${img.id}" onClick="showPhoto(this)">
+                    <img class="img-fluid img-thumbnail" src="${this.imgur_link}" alt="" id="${this.id}" onClick=""/>
                 </div>
             </div>
         `
@@ -28,9 +27,40 @@ class Photo {
         return comments
     }
 
+    viewPanelTemplate() {
+        return `
+                <div class="text-center card mb-3">
+                    <img src="${this.imgur_link}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title" id="photo-id"></h5>
+                    <div class="comment-card-text">
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <form id="comment-form">
+                        <label for="commenter">Name:</label>
+                            <div class="input-field">
+                                <input type="text" name="commenter" id="commenter">
+                            </div>
+                        <label for="content">Comment:</label>
+                            <div class="input-field">
+                                <textarea name="content" id="content" cols="60" rows="8"></textarea>
+                            </div>
+                        <br>
+                        <div>
+                            <input type="submit" value="Add Comment" class="btn-primary" id="">
+                        </div>
+                        <br>
+                            </form>
+                        </div>
+                </div>
+                `
+    }
+
     display() {
-        let photo = this;
-        document.querySelector("div.gallery").innerHTML += this.template(photo);
+        document.querySelector("div.gallery").innerHTML += this.template();
     }
 
     static renderAll() {
